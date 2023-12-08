@@ -9,12 +9,29 @@ import SwiftUI
 
 struct DetailView: View {
     
-    var currentActivity: ActivityItem
+    @State var allActivities = Activities()
+    @Binding var currentActivity: ActivityItem
+    
+    @State private var howMany: Int = 0
     
     var body: some View {
         VStack {
+            Text("How many: \(currentActivity.completed)")
+                .font(.headline)
+                .padding(.top, 10)
+            
             Text(currentActivity.details)
                 .font(.title)
+            
+            Button("Count") {
+                currentActivity.completed += 1
+                
+                if let index = allActivities.activities.firstIndex(of: currentActivity) {
+                    allActivities.activities[index] = currentActivity
+                }
+                
+                howMany = currentActivity.completed
+            }
         }
         .navigationTitle(currentActivity.name)
     }
@@ -22,6 +39,6 @@ struct DetailView: View {
 
 #Preview {
     NavigationStack {
-        DetailView(currentActivity: ActivityItem(name: "Test", details: "Another One", completed: 0))
+        DetailView(currentActivity: .constant(ActivityItem(name: "Test", details: "Another One", completed: 0)))
     }
 }

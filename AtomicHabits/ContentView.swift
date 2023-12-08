@@ -20,9 +20,9 @@ struct ContentView: View {
                         .symbolVariant(.circle)
                 } else {
                     List {
-                        ForEach(allActivities.activities, id: \.id) { item in
+                        ForEach($allActivities.activities, id: \.id) { $item in
                             NavigationLink {
-                                DetailView(currentActivity: item)
+                                DetailView(currentActivity: $item)
                             } label: {
                                 HStack {
                                     Text("\(item.completed)")
@@ -60,6 +60,7 @@ struct ContentView: View {
     ContentView()
 }
 
+// MARK: Functions
 extension ContentView {
     
     func deleteActivity(at offsets: IndexSet) {

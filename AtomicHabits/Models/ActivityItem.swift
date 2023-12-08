@@ -12,14 +12,18 @@ struct ActivityCategory {
 }
 
 struct ActivityItem: Identifiable, Codable, Equatable, Hashable {
-//    struct Items: Codable, Equatable, Hashable {
-//        var goal: String
-//        var isCompleted: Bool
-//    }
+    struct Items: Codable, Equatable, Hashable {
+        var goal: String
+        var isCompleted: Bool
+    }
     
-    var id: String = UUID().uuidString
+    static func ==(lhs: ActivityItem, rhs: ActivityItem) -> Bool {
+        return lhs.name == rhs.name && lhs.details == rhs.details && lhs.activityList == rhs.activityList
+    }
+    
+    var id: Int = UUID().hashValue
     var name: String
     let details: String
     var completed: Int
-    //var activityList: [Items]?
+    var activityList: [Items]?
 }
