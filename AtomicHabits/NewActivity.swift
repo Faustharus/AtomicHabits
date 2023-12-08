@@ -28,7 +28,7 @@ struct NewActivity: View {
             
             Section("Confim") {
                 Button("Save") {
-                    let newActivity = ActivityItem(name: name, details: details)
+                    let newActivity = ActivityItem(name: name, details: details, completed: 0)
                     allActivities.activities.append(newActivity)
                     dismiss()
                 }

@@ -9,13 +9,19 @@ import SwiftUI
 
 struct DetailView: View {
     
-    
+    var currentActivity: ActivityItem
     
     var body: some View {
-        Text("Hello, World!")
+        VStack {
+            Text(currentActivity.details)
+                .font(.title)
+        }
+        .navigationTitle(currentActivity.name)
     }
 }
 
 #Preview {
-    DetailView()
+    NavigationStack {
+        DetailView(currentActivity: ActivityItem(name: "Test", details: "Another One", completed: 0))
+    }
 }

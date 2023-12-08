@@ -15,24 +15,34 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                List {
-                    ForEach(allActivities.activities, id: \.id) { item in
-                        NavigationLink {
-                            DetailView()
-                        } label: {
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                    .font(.headline)
-                                Text(item.details)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                if allActivities.activities.isEmpty {
+                    ContentUnavailableView("No Activity", systemImage: "exclamationmark", description: Text("To add your first activity, Tap the '+' Button the top right corner of the screen "))
+                        .symbolVariant(.circle)
+                } else {
+                    List {
+                        ForEach(allActivities.activities, id: \.id) { item in
+                            NavigationLink {
+                                DetailView(currentActivity: item)
+                            } label: {
+                                HStack {
+                                    Text("\(item.completed)")
+                                    VStack(alignment: .leading) {
+                                        Text(item.name)
+                                            .font(.headline)
+                                        Text(item.details)
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
                             }
                         }
+                        .onDelete(perform: deleteActivity)
                     }
                 }
             }
             .navigationTitle("Atomic Habits")
             .toolbar {
+                EditButton()
                 Button {
                     self.isAddingNew = true
                 } label: {
@@ -48,4 +58,12 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+}
+
+extension ContentView {
+    
+    func deleteActivity(at offsets: IndexSet) {
+        allActivities.activities.remove(atOffsets: offsets)
+    }
+    
 }

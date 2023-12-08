@@ -11,14 +11,15 @@ struct ActivityCategory {
     // Creating a Category Section that allows to group
 }
 
-struct ActivityItem: Identifiable, Codable, Equatable {
-    struct Items: Codable, Equatable {
-        var goal: String
-        var isCompleted: Bool
-    }
+struct ActivityItem: Identifiable, Codable, Equatable, Hashable {
+//    struct Items: Codable, Equatable, Hashable {
+//        var goal: String
+//        var isCompleted: Bool
+//    }
     
     var id: String = UUID().uuidString
-    let name: String
+    var name: String
     let details: String
-    var activityList: [Items]?
+    var completed: Int
+    //var activityList: [Items]?
 }
